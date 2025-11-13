@@ -1,153 +1,180 @@
 # Shopware Category Notifier Plugin
 
-Ein Shopware 6.7 Plugin, das es Besuchern ermöglicht, sich für E-Mail-Benachrichtigungen bei neuen Produkten in bestimmten Kategorien anzumelden.
+A Shopware 6.6+ / 6.7 plugin that allows visitors to subscribe to email notifications for new products in specific categories.
 
 ## Thanks for your Support <3 
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/busaku)
 
-
 ## Features
 
-✅ **Frontend-Anmeldeformular** auf Kategorieseiten
-✅ **Double-Opt-In** Bestätigung per E-Mail
-✅ **Automatische Benachrichtigungen** bei neuen Produkten
-✅ **Benachrichtigungen bei Kategorie-Zuordnungen** zu bestehenden Produkten
-✅ **Administration-Modul** zur Verwaltung der Abonnements
-✅ **Mehrsprachig** (Deutsch/Englisch)
-✅ **Datenschutzkonform** mit Abmeldefunktion
-✅ **Anpassbare E-Mail-Templates** im Admin
-✅ **Shopware 6.7** kompatibel
+✅ **Frontend subscription form** on category pages
+✅ **Double-Opt-In** confirmation via email
+✅ **Automatic notifications** for new products
+✅ **Notifications for category assignments** to existing products
+✅ **Administration module** to manage subscriptions
+✅ **Multilingual** (German/English)
+✅ **GDPR compliant** with unsubscribe functionality
+✅ **Customizable email templates** in admin panel
+✅ **Compatible** with Shopware 6.6 and 6.7
 
 ## Installation
 
-1. Plugin installieren:
+### Via Composer (recommended)
+
+```bash
+composer require px86/category-notifier
+bin/console plugin:refresh
+bin/console plugin:install --activate Px86CategoryNotifier
+```
+
+### Manual Installation
+
+1. Download the latest release ZIP
+2. Extract to `custom/plugins/Px86CategoryNotifier`
+3. Install via CLI:
    ```bash
-   composer require px86/category-notifier
    bin/console plugin:refresh
    bin/console plugin:install --activate Px86CategoryNotifier
    ```
-2. Datenbank-Migration ausführen (geschieht automatisch)
-3. Storefront Assets bauen:
-   ```bash
-   bin/console assets:install
-   bin/build-storefront.sh
-   ```
-4. Administration Assets bauen:
-   ```bash
-   bin/build-administration.sh
-   ```
 
-## Konfiguration
+### Build Assets
 
-**Einstellungen → Erweiterungen → Meine Erweiterungen → Px86CategoryNotifier → ... → Konfiguration**
+After installation, build the assets:
 
-### Grundeinstellungen
+```bash
+# Storefront assets
+bin/console assets:install
+bin/build-storefront.sh
 
-- **Anzeigemodus**: Lege fest, in welchen Kategorien das Formular angezeigt werden soll
-  - In allen Kategorien
-  - Nur in ausgewählten Kategorien
-  - Alle außer ausgewählte Kategorien
+# Administration assets
+bin/build-administration.sh
+```
 
-### Formular-Darstellung
+## Configuration
 
-- **Formular-Position**: Wähle ob das Formular über oder unter den Produkten angezeigt wird
+Navigate to: **Settings → Extensions → My Extensions → Px86CategoryNotifier → ... → Configuration**
 
-## Texte anpassen
+### Basic Settings
 
-### Formular-Texte (Storefront)
+- **Display Mode**: Configure where the subscription form should appear
+  - Show in all categories
+  - Show only in selected categories
+  - Show in all except selected categories
 
-Die Texte im Storefront-Formular können in den Snippet-Dateien angepasst werden:
+- **Selected Categories**: Choose specific categories (required for "selected" and "excluded" modes)
 
-**Deutsch:**
+### Form Display
+
+- **Form Position**: Choose whether to display the form above or below the product listing
+
+## Customization
+
+### Storefront Texts
+
+Text strings in the subscription form can be customized in the snippet files:
+
+**German:**
 ```
 src/Resources/snippet/de_DE/messages.de-DE.json
 ```
 
-**Englisch:**
+**English:**
 ```
 src/Resources/snippet/en_GB/messages.en-GB.json
 ```
 
-Verfügbare Snippet-Keys:
-- `px86-category-notifier.subscription.title` - Formular-Überschrift
-- `px86-category-notifier.subscription.description` - Formular-Beschreibung
-- `px86-category-notifier.subscription.email` - Label für E-Mail-Feld
-- `px86-category-notifier.subscription.firstName` - Label für Vorname
-- `px86-category-notifier.subscription.lastName` - Label für Nachname
-- `px86-category-notifier.subscription.submit` - Button-Text
-- `px86-category-notifier.subscription.success` - Erfolgs-Meldung
-- `px86-category-notifier.subscription.error.*` - Fehler-Meldungen
+Available snippet keys:
+- `px86-category-notifier.subscription.title` - Form heading
+- `px86-category-notifier.subscription.description` - Form description
+- `px86-category-notifier.subscription.email` - Email field label
+- `px86-category-notifier.subscription.firstName` - First name label
+- `px86-category-notifier.subscription.lastName` - Last name label
+- `px86-category-notifier.subscription.submit` - Submit button text
+- `px86-category-notifier.subscription.success` - Success message
+- `px86-category-notifier.subscription.error.*` - Error messages
 
-**Nach Änderungen Cache leeren:**
+**Clear cache after changes:**
 ```bash
 bin/console cache:clear
 ```
 
-### E-Mail-Templates
+### Email Templates
 
-Die E-Mail-Templates können direkt im Admin bearbeitet werden:
+Email templates can be edited directly in the admin panel:
 
-**Einstellungen → E-Mail-Vorlagen**
+**Settings → Email Templates**
 
-Suche nach "Kategorie" oder filtere nach dem Plugin:
-- **Kategorie-Benachrichtigung: Bestätigung** - Double-Opt-In E-Mail
-- **Kategorie-Benachrichtigung: Neues Produkt** - Produktbenachrichtigung
+Search for "Category" or filter by plugin:
+- **Category Notification: Confirmation** - Double-opt-in email
+- **Category Notification: New Product** - Product notification email
 
-## Technische Details
+### Styling
 
-### Datenbank-Schema
+Customize the form design in:
+```
+src/Resources/app/storefront/src/scss/base.scss
+```
 
-Tabelle: `px86_category_notifier_subscription`
-- Speichert E-Mail, Kategorie-ID, Name, Status
-- Foreign Keys zu `category` und `salutation`
-- Indizes für Performance-Optimierung
+### Additional Languages
 
-### Event-System
+Add translations by creating new snippet files under `src/Resources/snippet/`
 
-- Lauscht auf `ProductEvents::PRODUCT_WRITTEN_EVENT`
-- Erkennt neue Produkte automatisch
-- Versendet Benachrichtigungen an alle bestätigten Abonnenten
+## Technical Details
 
-### API-Endpunkte
+### Database Schema
 
-- `POST /category-notifier/subscribe` - Neues Abonnement
-- `GET /category-notifier/confirm/{token}` - Bestätigung
-- `POST /category-notifier/unsubscribe` - Abmeldung
+Table: `px86_category_notifier_subscription`
+- Stores email, category ID, name, and status
+- Foreign keys to `category` and `salutation` tables
+- Optimized with indexes for performance
 
-## Anpassungen
+### Event System
 
-### E-Mail-Templates
+- Listens to `ProductEvents::PRODUCT_WRITTEN_EVENT`
+- Automatically detects new products
+- Sends notifications to all confirmed subscribers
+- Detects category assignments to existing products
 
-Templates befinden sich in `Service/NotificationService.php` und können angepasst werden.
+### API Endpoints
 
-### Design
+- `POST /category-notifier/subscribe` - Create new subscription
+- `GET /category-notifier/confirm/{token}` - Confirm subscription
+- `GET /category-notifier/unsubscribe/{email}/{categoryId}` - Unsubscribe
 
-Styling in `Resources/app/storefront/src/scss/base.scss` anpassen.
+## Development
 
-### Übersetzungen
+### Requirements
 
-Snippets unter `Resources/snippet/` für weitere Sprachen hinzufügen.
+- PHP 8.1+
+- Shopware 6.6.0+ or 6.7.0+
+- Composer
+- Node.js (for asset building)
 
-## Shopware Store Richtlinien
+### Code Quality
 
-Dieses Plugin folgt den Shopware Store Qualitätsrichtlinien:
+This plugin follows Shopware Store quality guidelines:
 - ✅ PSR-4 Autoloading
-- ✅ Shopware 6.7 API-Kompatibilität
-- ✅ Mehrsprachigkeit
-- ✅ Admin-Interface
-- ✅ Proper Migration-System
-- ✅ Service-Container Pattern
-- ✅ Event-Subscriber Pattern
-
-## Support
-
-Bei Fragen oder Problemen wenden Sie sich bitte an info@px86.de.
+- ✅ Shopware 6.6/6.7 API compatibility
+- ✅ Multilingual support
+- ✅ Admin interface
+- ✅ Proper migration system
+- ✅ Service container pattern
+- ✅ Event subscriber pattern
+- ✅ GDPR compliant
 
 ## Changelog
 
 ### Version 1.0.0
-- Initiales Release
-- Frontend-Anmeldeformular
-- Double-Opt-In Bestätigung
-- Automatische Benachrichtigungen
-- Administration-Modul
+- Initial release
+- Frontend subscription form
+- Double-opt-in confirmation
+- Automatic product notifications
+- Administration module for subscription management
+- Multilingual support (DE/EN)
+- Customizable email templates
+- GDPR-compliant unsubscribe functionality
+
+## Support
+
+- **Issues**: [GitHub Issues](https://github.com/px86de/shopware-category-notifier/issues)
+- **Donate**: [Buy me a coffee](https://buymeacoffee.com/busaku)
