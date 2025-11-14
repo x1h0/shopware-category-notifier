@@ -1,4 +1,5 @@
 # Shopware Category Notifier Plugin
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![Packagist Version](https://img.shields.io/packagist/v/px86/category-notifier?label=stable)](https://packagist.org/packages/px86/category-notifier) [![Packagist Downloads](https://img.shields.io/packagist/dt/px86/category-notifier)](https://packagist.org/packages/px86/category-notifier)
 
 A Shopware 6.6+ / 6.7 plugin that allows visitors to subscribe to email notifications for new products in specific categories.
 
@@ -7,15 +8,15 @@ A Shopware 6.6+ / 6.7 plugin that allows visitors to subscribe to email notifica
 
 ## Features
 
-✅ **Frontend subscription form** on category pages
-✅ **Double-Opt-In** confirmation via email
-✅ **Automatic notifications** for new products
-✅ **Notifications for category assignments** to existing products
-✅ **Administration module** to manage subscriptions
-✅ **Multilingual** (German/English)
-✅ **GDPR compliant** with unsubscribe functionality
-✅ **Customizable email templates** in admin panel
-✅ **Compatible** with Shopware 6.6 and 6.7
+- ✅ **Frontend subscription form** on category pages
+- ✅ **Double-Opt-In** confirmation via email
+- ✅ **Automatic notifications** for new products
+- ✅ **Notifications for category assignments** to existing products
+- ✅ **Administration module** to manage subscriptions
+- ✅ **Multilingual** (German/English)
+- ✅ **GDPR compliant** with unsubscribe functionality
+- ✅ **Customizable email templates** in admin panel
+- ✅ **Compatible** with Shopware 6.6 and 6.7
 
 ## Installation
 
