@@ -45,6 +45,8 @@
             <argument type="service" id="px86_category_notifier_subscription.repository"/>
             <argument type="service" id="Px86\CategoryNotifier\Service\NotificationService"/>
             <argument type="service" id="logger"/>
+            <argument type="service" id="Shopware\Core\Content\ProductStream\Service\ProductStreamBuilder"/>
+            <argument type="service" id="Doctrine\DBAL\Connection"/>
             <tag name="kernel.event_subscriber"/>
         </service>
 
